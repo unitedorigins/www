@@ -1,0 +1,85 @@
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	display: flex;
+	overflow: hidden;
+	align-items: center;
+	justify-content: center;
+	background-color: #222;
+}
+
+/* ..................................................... */
+.text {
+	--text-blendSize: .08em;
+	--text-blendColorA: #77f8;
+	--text-blendColorB: #ff68;
+	
+	position: relative;
+	color: #fff;
+	line-height: 1em;
+	letter-spacing: -.1ch;
+	font-size: 50px;
+	font-family: "Fira Code", monospace;
+}
+
+.text::after {
+	display: none;
+    content: "";
+    position: absolute;
+    left: 100%;
+    bottom: 0;
+    width: .7ch;
+    height: 1em;
+    margin-left: .35ch;
+    border-radius: 2px;
+    background-color: currentColor;
+    animation: cursorAnim 1s ease infinite;
+}
+@keyframes cursorAnim {
+	0% { opacity: .5; }
+	45% { opacity: .5; }
+	55% { opacity: 0; }
+	100% { opacity: 0; }
+}
+
+.text-clip {
+	position: relative;
+	display: flex;
+	align-items: baseline;
+}
+.text-clip + .text-clip {
+	position: absolute;
+	top: 0;
+}
+.text:not( .text-blended ) .text-clip + .text-clip {
+	display: none;
+}
+
+.text-word {
+	margin: 0;
+	white-space: nowrap;
+}
+
+.text-blend {
+	position: absolute;
+	top: 0;
+	opacity: 0;
+	transition: .1s;
+	transition-property: opacity;
+}
+.text-blendA {
+	color: var( --text-blendColorA );
+	margin: calc( var( --text-blendSize ) * -1 ) 0 0 var( --text-blendSize );
+	mix-blend-mode: darken;
+}
+.text-blendB {
+	color: var( --text-blendColorB );
+	margin: var( --text-blendSize ) 0 0 calc( var( --text-blendSize ) * -1 );
+	mix-blend-mode: color-burn;
+}
+.text-blended .text-blend {
+	opacity: .4;
+}
